@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:cxf="http://cxf.apache.org/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                       http://www.springframework.org/schema/beans/spring-beans.xsd
+                       http://cxf.apache.org/jaxrs
+                       http://cxf.apache.org/schemas/jaxrs.xsd                       
+	                   http://cxf.apache.org/core 
+                       http://cxf.apache.org/schemas/core.xsd">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<bean id="baseDAO" class="net.winter.jetty.example.server.dao.BaseDAO">
+		<constructor-arg>
+			<value>mybatis.xml</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="userDAO" class="net.winter.jetty.example.server.dao.UserDAO">
+		<property name="baseDAO" ref="baseDAO" />
+	</bean>
+
+	<bean id="userBiz" class="net.winter.jetty.example.server.biz.UserBiz">
+		<property name="userDAO" ref="userDAO" />
+	</bean>
+
+	<bean id="userServiceBean" class="net.winter.jetty.example.server.resource.UserService">
+		<property name="userBiz" ref="userBiz" />
+	</bean>
+
+	<jaxrs:server id="userService" address="/user">
+		<jaxrs:providers>
+			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+		</jaxrs:providers>
+		
+		<jaxrs:serviceBeans>
+			<ref bean="userServiceBean" />
+		</jaxrs:serviceBeans>
+		<jaxrs:features>
+			<cxf:logging />
+		</jaxrs:features>
+	</jaxrs:server>
+
+</beans>
+

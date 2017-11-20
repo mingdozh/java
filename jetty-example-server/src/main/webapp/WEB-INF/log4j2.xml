@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<RollingRandomAccessFile name="${service_name}-log"
+			fileName="/home/work/log/${service_name}/${service_name}.log"
+			filePattern="/home/work/log/${service_name}/${service_name}.log.%d{yyyyMMddHH}"
+			append="true" immediateFlush="false">
+			<PatternLayout
+				pattern="[%-5p %d{yyyy-MM-dd HH:mm:ss.SSS}] [%t] [%C{1}.%M:%L] [%m]%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+		</RollingRandomAccessFile>
+	</Appenders>
+
+	<Loggers>
+		<asyncRoot level="${log_level}" includeLocation="true">
+			<AppenderRef ref="${service_name}-log" />
+		</asyncRoot>
+	</Loggers>
+</Configuration>
