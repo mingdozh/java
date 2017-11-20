@@ -12,11 +12,7 @@ import javax.ws.rs.core.MediaType;
 
 import net.winter.jetty.example.server.biz.UserBiz;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class UserService {
-	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+public class UserService {	
 
 	private UserBiz userBiz;
 	public void setUserBiz(UserBiz userBiz) {
@@ -27,8 +23,6 @@ public class UserService {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getUser(@PathParam("id") int id) {
-		logger.info("get user by id:{}", id);
-
 		User user = null;
 
 		try {
@@ -54,7 +48,7 @@ public class UserService {
 		} catch (Exception e) {
 			throw new ServiceUnavailableException();
 		}
-
+		
 		return user;
 	}
 
