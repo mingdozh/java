@@ -7,7 +7,7 @@
 	<packaging>jar</packaging>
 
 	<properties>
-		<maven.build.timestamp.format>yyyymmddHHmmss</maven.build.timestamp.format>
+		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hadoop.version>2.7.1</hadoop.version>
 	</properties>
@@ -27,7 +27,9 @@
 
 
 	<build>
+
 		<finalName>${artifactId}.${maven.build.timestamp}</finalName>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
